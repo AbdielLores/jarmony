@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Mastery</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Incluir el CSS de GrapesJS -->
+    <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet"/>
+    
     <style>
         body {
             margin: 0;
@@ -88,37 +92,82 @@
 </head>
 <body>
 
-    <!-- Encabezado -->
-    <header>
-        <h1>Music Mastery</h1>
-        <p>Consejos y técnicas para vivir de la música</p>
-    </header>
+    <!-- Contenedor de GrapesJS -->
+    <div id="gjs">
+    
+        <!-- Encabezado -->
+        <header>
+            <h1>Music Mastery</h1>
+            <p>Consejos y técnicas para vivir de la música</p>
+        </header>
+    
+        <!-- Sección 1 -->
+        <section class="section fade-in">
+            <h2>El Camino al Éxito Musical</h2>
+            <p>Descubre cómo construir una carrera sólida en la industria musical. Desde consejos sobre networking hasta la creación de contenido auténtico, aquí encontrarás todo lo que necesitas para hacer que tu música llegue al siguiente nivel.</p>
+            <a href="#tips" class="btn">Leer más</a>
+        </section>
+    
+        <!-- Sección 2 -->
+        <section id="tips" class="section">
+            <h2>Consejos Prácticos</h2>
+            <p>Explora estrategias clave para manejar tus finanzas, conseguir más seguidores y generar ingresos estables a partir de tu música.</p>
+            <a href="#about" class="btn">Explorar más</a>
+        </section>
+    
+        <!-- Sección 3 -->
+        <section id="about" class="section fade-in">
+            <h2>Técnicas Avanzadas</h2>
+            <p>Aprende sobre producción musical, marketing digital para músicos y cómo optimizar tu contenido en plataformas de streaming. Estas técnicas te ayudarán a maximizar tu impacto.</p>
+            <a href="#contact" class="btn">Empezar ahora</a>
+        </section>
+    
+        <!-- Pie de página -->
+        <footer>
+            <p>© 2024 Music Mastery - Todos los derechos reservados</p>
+        </footer>
+    
+    </div> <!-- Fin del contenedor de GrapesJS -->
 
-    <!-- Sección 1 -->
-    <section class="section fade-in">
-        <h2>El Camino al Éxito Musical</h2>
-        <p>Descubre cómo construir una carrera sólida en la industria musical. Desde consejos sobre networking hasta la creación de contenido auténtico, aquí encontrarás todo lo que necesitas para hacer que tu música llegue al siguiente nivel.</p>
-        <a href="#tips" class="btn">Leer más</a>
-    </section>
+    <!-- Incluir el JavaScript de GrapesJS -->
+    <script src="https://unpkg.com/grapesjs"></script>
+    <script>
+        const editor = grapesjs.init({
+            container: '#gjs', // Contenedor de GrapesJS
+            fromElement: true,  // Usa el contenido existente como base
+            height: '100vh',    // Altura del editor
+            width: 'auto',      // Ancho del editor
+            storageManager: {    // Opcional: configuración del gestor de almacenamiento
+                type: 'local',    // Tipo de almacenamiento (local, remote)
+                autosave: true,   // Habilita el guardado automático
+                autoload: true,   // Habilita la carga automática
+                stepsBeforeSave: 1, // Pasos antes de guardar
+            },
+            panels: { defaults: [] }, // Opcional: personalización de paneles
+            plugins: [], // Aquí puedes añadir plugins si lo deseas
+            // Opcional: Configuración de la barra de herramientas, bloques, etc.
+        });
 
-    <!-- Sección 2 -->
-    <section id="tips" class="section">
-        <h2>Consejos Prácticos</h2>
-        <p>Explora estrategias clave para manejar tus finanzas, conseguir más seguidores y generar ingresos estables a partir de tu música.</p>
-        <a href="#about" class="btn">Explorar más</a>
-    </section>
+        // Opcional: Añadir un botón para guardar el contenido
+        editor.Panels.addButton('options', [{
+            id: 'save-db',
+            className: 'fa fa-floppy-o',
+            command: 'save-db',
+            attributes: { title: 'Save DB' }
+        }]);
 
-    <!-- Sección 3 -->
-    <section id="about" class="section fade-in">
-        <h2>Técnicas Avanzadas</h2>
-        <p>Aprende sobre producción musical, marketing digital para músicos y cómo optimizar tu contenido en plataformas de streaming. Estas técnicas te ayudarán a maximizar tu impacto.</p>
-        <a href="#contact" class="btn">Empezar ahora</a>
-    </section>
-
-    <!-- Pie de página -->
-    <footer>
-        <p>© 2024 Music Mastery - Todos los derechos reservados</p>
-    </footer>
+        editor.Commands.add('save-db', {
+            run: function(editor, sender) {
+                sender.set('active', false);
+                const html = editor.getHtml();
+                const css = editor.getCss();
+                // Aquí puedes implementar la lógica para guardar el HTML y CSS, por ejemplo, enviándolo a un servidor
+                console.log('HTML:', html);
+                console.log('CSS:', css);
+                alert('Contenido guardado en la consola.');
+            }
+        });
+    </script>
 
 </body>
 </html>
